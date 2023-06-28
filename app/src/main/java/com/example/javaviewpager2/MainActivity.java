@@ -10,5 +10,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // create fake person
+        MyPerson myPerson1 = new MyPerson("Anne", 1, 12346578);
+
+        // ... then create a list of people to insert into your adapter
     }
 }
