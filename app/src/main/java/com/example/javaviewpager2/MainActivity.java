@@ -28,9 +28,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         viewPager2 = findViewById(R.id.viewPager2);
         // create fake person
-        MyPerson myPerson1 = new MyPerson("Anne", 1, 12346578);
-        MyPerson myPerson2 = new MyPerson("Johnny",2,23456);
-        MyPerson myPerson3 = new MyPerson("Lebron James",2,67890);
+        MyPerson myPerson1 = new MyPerson("菊草葉", "草", 14,R.drawable.green);
+        MyPerson myPerson2 = new MyPerson("波加曼","水",16,R.drawable.blue);
+        MyPerson myPerson3 = new MyPerson("火雉雞","火",15,R.drawable.red);
 
         // ... then create a list of people to insert into your adapter
         List<MyPerson> myList= new ArrayList<>();

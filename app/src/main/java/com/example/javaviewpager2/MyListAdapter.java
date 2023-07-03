@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -48,6 +49,7 @@ public class MyListAdapter extends ListAdapter<MyPerson, MyListAdapter.MyViewHol
         holder.nameTextView.setText(person.getName());
         holder.genderTextView.setText(String.valueOf(person.getGender()));
         holder.birthdayTextView.setText(String.valueOf(person.getBirthday()));
+        holder.imageView.setImageResource(person.getImageview());
     }
 
 
@@ -56,11 +58,14 @@ public class MyListAdapter extends ListAdapter<MyPerson, MyListAdapter.MyViewHol
         public TextView genderTextView;
         public TextView birthdayTextView;
 
+        public ImageView imageView;
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             nameTextView = itemView.findViewById(R.id.name_textview);
             genderTextView = itemView.findViewById(R.id.gender_textview);
             birthdayTextView = itemView.findViewById(R.id.birthday_textview);
+            imageView = itemView.findViewById(R.id.image_view);
         }
 
     }
