@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
         // 設置viewPager動畫效果
         setViewPagerScroll();
-        setViewPagerTransformer(0.8f,20);
+        setViewPagerTransformerNew(0.2f,20);
 
     }
 
@@ -69,6 +69,19 @@ public class MainActivity extends AppCompatActivity {
         compositePageTransformer.addTransformer((page, position) -> {
             float r = 1 - Math.abs(position);
             page.setScaleY(scale + r * (1 - scale));
+        });
+        viewPager2.setPageTransformer(compositePageTransformer);
+    }
+
+    private void setViewPagerTransformerNew(float zoom, int margin) {
+        // 在viewPager2上設置間距與轉場效果
+        // margin可設定相鄰頁面間需間隔多少pixel
+        // zoom可設定每個頁面在滑動時的放大倍率(建議值:0.1f~0.3f)
+        CompositePageTransformer compositePageTransformer = new CompositePageTransformer();
+        compositePageTransformer.addTransformer(new MarginPageTransformer(margin));
+        compositePageTransformer.addTransformer((page, position) -> {
+            float scaleFactor = Math.max(1, 1 + zoom * (1 - Math.abs(position)) * Math.abs(position));
+            page.setScaleY(scaleFactor);
         });
         viewPager2.setPageTransformer(compositePageTransformer);
     }
