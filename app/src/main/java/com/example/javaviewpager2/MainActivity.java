@@ -7,7 +7,6 @@ import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
-import android.widget.ListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
         // 設置viewPager動畫效果
         setViewPagerScroll();
-        setViewPagerTransformer(0.8f,20);
+        setViewPagerTransformerEnlargeWhenScroll(0.2f,20);
 
     }
 
@@ -69,6 +68,27 @@ public class MainActivity extends AppCompatActivity {
         compositePageTransformer.addTransformer((page, position) -> {
             float r = 1 - Math.abs(position);
             page.setScaleY(scale + r * (1 - scale));
+        });
+        viewPager2.setPageTransformer(compositePageTransformer);
+    }
+
+    private void setViewPagerTransformerEnlargeWhenScroll(float zoom, int margin) {
+        // 在viewPager2上設置間距與轉場效果
+        // margin可設定相鄰頁面間需間隔多少pixel
+        // zoom可設定每個頁面在滑動時的放大倍率(建議值:0.1f~0.3f)
+        CompositePageTransformer compositePageTransformer = new CompositePageTransformer();
+        compositePageTransformer.addTransformer(new MarginPageTransformer(margin));
+        // page代表每個頁面,而position是每個頁面的位置(左、中、右分別為-1,0,1)。
+        compositePageTransformer.addTransformer((page, position) -> {
+            // pos參數將position加上絕對值
+            float pos = Math.abs(position);
+            // (1-pos)會讓position在-1和1的page保持高度為1的倍率
+            // pos會讓position在0的page保持高度為1的倍率
+            // 所以1 + (1 - pos) * pos這個算法會同時讓position在-1,0,1的page高度設定為1倍。
+            // 在滑動時pos為小數，所以倍率會是1點多倍，就會產生滑動時微放大的轉場效果。
+            // 只用 1 + (1 - pos) * pos的算法會使頁面過度放大，乘上zoom參數用來抑制這個現象，所以才會有建議值。
+            float scaleFactor = Math.max(1, 1 + zoom * (1 - pos) * pos);
+            page.setScaleY(scaleFactor);
         });
         viewPager2.setPageTransformer(compositePageTransformer);
     }
