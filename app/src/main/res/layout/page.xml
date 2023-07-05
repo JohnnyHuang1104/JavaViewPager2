@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -29,8 +30,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
-            android:textSize="25dp"
+            android:textSize="25sp"
             android:textStyle="bold"
             />
 
@@ -41,8 +41,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="50dp"
-        android:gravity="center"
-        >
+        android:gravity="center">
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -50,15 +49,13 @@
             android:textSize="30dp"
             android:textStyle="bold"
             android:layout_weight="1"
-            android:gravity="center"
-            />
+            android:gravity="center" />
 
         <TextView
             android:id="@+id/gender_textview"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
             android:textSize="25dp"
             android:textStyle="bold"/>
 
@@ -69,8 +66,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="50dp"
-        android:gravity="center"
-        >
+        android:gravity="center">
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -78,25 +74,43 @@
             android:textSize="30dp"
             android:textStyle="bold"
             android:layout_weight="1"
-            android:gravity="center"
-            />
+            android:gravity="center" />
 
         <TextView
             android:id="@+id/birthday_textview"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
             android:textSize="25dp"
             android:textStyle="bold"/>
 
     </LinearLayout>
 
     <ImageView
+        android:id="@+id/buttonLeft"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="left|center"
+        android:padding="8dp"
+        android:paddingLeft="20dp"
+        android:src="@drawable/left" />
+
+    <ImageView
+        android:id="@+id/buttonRight"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="right|center"
+        android:padding="8dp"
+        android:paddingLeft="20dp"
+        app:srcCompat="@drawable/right" />
+
+    <ImageView
         android:id="@+id/image_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginVertical="20dp"
-        android:layout_marginHorizontal="20dp"/>
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginVertical="20dp" />
+
+
 
 </LinearLayout>
