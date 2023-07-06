@@ -6,7 +6,11 @@ import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toolbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +33,10 @@ public class MainActivity extends AppCompatActivity {
         // 設置viewPager動畫效果
         setViewPagerScroll();
         setViewPagerTransformerEnlargeWhenScroll(0.2f,20);
+
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
+        //ButterKnife.bind(this);
 
     }
 
@@ -91,5 +99,26 @@ public class MainActivity extends AppCompatActivity {
             page.setScaleY(scaleFactor);
         });
         viewPager2.setPageTransformer(compositePageTransformer);
+    }
+
+    @SuppressLint("ResourceType")
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        MainFragment f = (MainFragment) getSupportFragmentManager().findFragmentById(R.id.style_cube); // style_cube記的做更改
+        switch (id) {
+            case R.id.style_move:
+                //f.setAnimationStyle(MainFragment.Move);
+                return true;
+            case R.id.style_cube:
+                //f.setAnimationStyle(MainFragment.Cube);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -8,10 +8,10 @@ import androidx.annotation.NonNull;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-public class MoveAnimation extends PropertyAnimation{
+public class MoveAnimation extends PropertyAnimation {
 
-    @IntDef({Left,Right})
-    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({Left, Right})  // 此行說明Left和Right必須帶入Int進去(可以註解掉這行)
+    @Retention(RetentionPolicy.SOURCE) // 用於程式碼的註解用(可以註解掉這行)
     @interface Direction {}
 
     public static final int Left  = 1;
@@ -30,9 +30,9 @@ public class MoveAnimation extends PropertyAnimation{
     }
 
     private MoveAnimation(@Direction int direction, boolean enter, long duration) {
-        mDirection = direction;
-        mEnter = enter;
-        setDuration(duration);
+        mDirection = direction;    // 動畫效果的方向
+        mEnter = enter;            // true for enter, false for exit
+        setDuration(duration);     // 動畫效果的時間
     }
 
     private static class HorizontalMoveAnimation extends MoveAnimation {

@@ -12,12 +12,8 @@ public class PropertyAnimation extends Animation {
 
     protected float mTranslationX = 0.0f;
 
-
-
     protected void applyTransformation(Transformation t) {
         final Matrix m = t.getMatrix();
         final float w = mWidth;
-
-
     }
 }
