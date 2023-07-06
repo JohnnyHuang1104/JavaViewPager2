@@ -7,11 +7,26 @@
     tools:context=".MainActivity"
     android:orientation="vertical">
 
+
+
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="9"
         android:paddingHorizontal="35dp"
-        android:paddingVertical="35dp" />
+        android:layout_marginTop="15dp"
+        />
+
+    <!--tab_selector用來將Indicator對應到目前的Page-->
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:tabBackground="@drawable/tab_selector"
+        app:tabGravity="center"
+        app:tabIndicatorHeight="0dp"
+        />
 
 </LinearLayout>
