@@ -10,13 +10,14 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
-
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +45,10 @@ public class MainActivity extends AppCompatActivity {
 
         // 將PageIndicator與ViewPager2結合(attach)
         linkPageIndicatorAndViewPager2();
+
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
+        //ButterKnife.bind(this);
 
     }
 
