@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
+<selector xmlns:android = "http://schemas.android.com/apk/res/android">
 
     <!--未被滑到的頁面會預設成default_dot,而當前的頁面則會顯示selected_dot  -->
-    <item android:drawable="@drawable/selected_dot"
+    <item android:drawable = "@drawable/selected_dot"
           android:state_selected = "true"/>
 
     <item android:drawable = "@drawable/default_dot"/>

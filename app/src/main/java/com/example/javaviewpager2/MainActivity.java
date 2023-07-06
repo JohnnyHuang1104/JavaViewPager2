@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
         // 將PageIndicator與ViewPager2結合(attach)
         linkPageIndicatorAndViewPager2();
 
-
     }
 
     private List<MyPerson> getPersonList() {
