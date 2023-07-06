@@ -11,6 +11,13 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toolbar;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,13 +25,15 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private ViewPager2 viewPager2;
-
+    private TabLayout tabLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         viewPager2 = findViewById(R.id.viewPager2);
+        tabLayout = findViewById(R.id.tab_layout);
 
         // 將清單放入ListAdapter，並將ListAdapter綁定到viewPager2上。
         MyListAdapter adapter = new MyListAdapter(getPersonList());
@@ -32,7 +41,10 @@ public class MainActivity extends AppCompatActivity {
 
         // 設置viewPager動畫效果
         setViewPagerScroll();
-        setViewPagerTransformerEnlargeWhenScroll(0.2f,20);
+        setViewPagerTransformerEnlargeWhenScroll(0.2f,40);
+
+        // 將PageIndicator與ViewPager2結合(attach)
+        linkPageIndicatorAndViewPager2();
 
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
@@ -99,6 +111,18 @@ public class MainActivity extends AppCompatActivity {
             page.setScaleY(scaleFactor);
         });
         viewPager2.setPageTransformer(compositePageTransformer);
+    }
+
+    private void linkPageIndicatorAndViewPager2() {
+        // TabLayoutMediator會對應viewPager2的頁面數量，產生對應的tab(選項卡)。
+        // 每個被產生的tab在TabLayout裡會以水平方式排列，並根據在activity_main.xml的設定在背景放置對應顏色的圓點。
+        // 綜合上述兩個註解，可看出這個函式就是產生PageIndicator的原因。
+        new TabLayoutMediator(tabLayout, viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
+            @Override
+            public void onConfigureTab( TabLayout.Tab tab, int position) {
+                // Some implementation
+            }
+        }).attach();
     }
 
     @SuppressLint("ResourceType")

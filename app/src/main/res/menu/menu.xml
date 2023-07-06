@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-    <menu xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        tools:context="com.example.javaviewpager2.MainActivity">
+
+    
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.javaviewpager2.MainActivity">
+
     <item
         android:id="@+id/style_move"
         android:title="Move"
@@ -12,5 +15,5 @@
         android:id="@+id/style_cube"
         android:title="Cube"
         app:showAsAction="never"/>
-    </menu>
+</menu>
 
