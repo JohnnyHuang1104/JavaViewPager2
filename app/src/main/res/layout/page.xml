@@ -100,7 +100,9 @@
         android:layout_height="50dp"
         android:layout_alignParentLeft="true"
         android:padding="8dp"
-        android:src="@drawable/left" />
+        android:background="@drawable/left"
+
+        />
 
     <ImageView
         android:id="@+id/buttonRight"
@@ -108,7 +110,8 @@
         android:layout_height="50dp"
         android:padding="8dp"
         android:layout_alignParentRight="true"
-        app:srcCompat="@drawable/right" />
+        android:background="@drawable/right"
+        />
 
     </RelativeLayout>
 
