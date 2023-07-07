@@ -8,6 +8,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toolbar;
@@ -128,19 +129,36 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("ResourceType")
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
+        getMenuInflater().inflate(R.menu.menu, menu); //顯現清單的功能
         return true;
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        MainFragment f = (MainFragment) getSupportFragmentManager().findFragmentById(R.id.style_cube); // style_cube記的做更改
+        MainFragment layout = (MainFragment)getSupportFragmentManager().findFragmentById(R.id.viewPager2);
         switch (id) {
-            case R.id.style_move:
-                //f.setAnimationStyle(MainFragment.Move);
+            case R.id.regular:
+
                 return true;
+
+            case R.id.one_screen_three_page_basic:
+
+                return true;
+
+            case R.id.one_screen_three_page_advanced:
+
+                return true;
+
+            case R.id.page_indicator:
+
+                return true;
+
+            case R.id.style_move:
+                layout.setAnimationStyle(MainFragment.Move); //仍然有bug，需要進行修正
+                return true;
+
             case R.id.style_cube:
-                //f.setAnimationStyle(MainFragment.Cube);
+                layout.setAnimationStyle(MainFragment.Cube); //仍然有bug，需要進行修正
                 return true;
         }
         return super.onOptionsItemSelected(item);
