@@ -3,6 +3,8 @@ package com.example.javaviewpager2;
 import android.view.animation.Transformation;
 import androidx.annotation.NonNull;
 
+import com.example.javaviewpager2.animation.PropertyAnimation;
+
 public class CubeAnimation extends PropertyAnimation {
 
     //@IntDef({LEFT, RIGHT})

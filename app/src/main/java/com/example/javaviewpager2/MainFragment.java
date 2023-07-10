@@ -1,17 +1,13 @@
 package com.example.javaviewpager2;
 
-import android.annotation.SuppressLint;
-import android.graphics.Color;
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.widget.TextView;
 
 import androidx.annotation.IntDef;
 import androidx.fragment.app.Fragment;
 
+import com.example.javaviewpager2.animation.MoveAnimation;
 import com.google.android.material.snackbar.Snackbar;
 
 public class MainFragment extends Fragment {

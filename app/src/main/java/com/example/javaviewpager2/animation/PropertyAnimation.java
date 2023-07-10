@@ -1,4 +1,4 @@
-package com.example.javaviewpager2;
+package com.example.javaviewpager2.animation;
 
 import android.graphics.Camera;
 import android.graphics.Matrix;

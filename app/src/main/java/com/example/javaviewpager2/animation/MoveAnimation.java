@@ -1,4 +1,4 @@
-package com.example.javaviewpager2;
+package com.example.javaviewpager2.animation;
 
 import android.view.animation.Transformation;
 import androidx.annotation.IntDef;
