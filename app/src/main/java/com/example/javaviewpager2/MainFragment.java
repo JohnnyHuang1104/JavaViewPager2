@@ -1,12 +1,12 @@
 package com.example.javaviewpager2;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.animation.Animation;
-import android.widget.TextView;
 
 import androidx.annotation.IntDef;
 import androidx.fragment.app.Fragment;
+
+import com.example.javaviewpager2.animation.MoveAnimation;
 
 public class MainFragment extends Fragment {
 
