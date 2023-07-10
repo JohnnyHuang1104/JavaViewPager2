@@ -1,10 +1,8 @@
 package com.example.javaviewpager2.animation;
 
 import android.view.animation.Transformation;
-
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
-
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
@@ -29,7 +27,7 @@ public class MoveAnimation extends PropertyAnimation {
         return null;
     }
 
-    private MoveAnimation(@Direction int direction, boolean enter, long duration) {
+    MoveAnimation(@Direction int direction, boolean enter, long duration) {
         mDirection = direction;    // 動畫效果的方向
         mEnter = enter;            // true for enter, false for exit
         setDuration(duration);     // 動畫效果的時間
@@ -41,7 +39,7 @@ public class MoveAnimation extends PropertyAnimation {
             super(direction, enter, duration);
         }
 
-        @Override
+        @Override // 
         protected void applyTransformation(float interpolatedTime, Transformation t) {
             float value = mEnter ? (interpolatedTime - 1.0f) : interpolatedTime;
             if (mDirection == Right) value *= -1.0f;
