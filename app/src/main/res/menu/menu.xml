@@ -6,6 +6,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.javaviewpager2.MainActivity">
+    <item
+        android:id="@+id/regular"
+        android:title="Regular"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/one_screen_three_page_basic"
+        android:title="OneScreenThreePageBasic"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/one_screen_three_page_advanced"
+        android:title="OneScreenThreePageAdvanced"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/page_indicator"
+        android:title="PageIndicator"
+        app:showAsAction="never"/>
 
     <item
         android:id="@+id/style_move"
