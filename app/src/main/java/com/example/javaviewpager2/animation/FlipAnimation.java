@@ -9,11 +9,11 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 /**
- * Move Animation
+ * 3D Flip Animation
  * @author kakajika
  * @since 2015/11/28
  */
-public class MoveAnimation extends ViewPropertyAnimation {
+public class FlipAnimation extends ViewPropertyAnimation {
 
     @IntDef({UP, DOWN, LEFT, RIGHT})
     @Retention(RetentionPolicy.SOURCE)
@@ -34,55 +34,89 @@ public class MoveAnimation extends ViewPropertyAnimation {
      * @return
      */
     public static @NonNull
-    MoveAnimation create(@Direction int direction, boolean enter, long duration) {
+    FlipAnimation create(@Direction int direction, boolean enter, long duration) {
         switch (direction) {
             case UP:
             case DOWN:
-                return new VerticalMoveAnimation(direction, enter, duration);
+                return new VerticalFlipAnimation(direction, enter, duration);
             case LEFT:
             case RIGHT:
             default:
-                return new HorizontalMoveAnimation(direction, enter, duration);
+                return new HorizontalFlipAnimation(direction, enter, duration);
         }
     }
 
-    private MoveAnimation(@Direction int direction, boolean enter, long duration) {
+    private FlipAnimation(@Direction int direction, boolean enter, long duration) {
         mDirection = direction;
         mEnter = enter;
         setDuration(duration);
     }
 
-    private static class VerticalMoveAnimation extends MoveAnimation {
+    private static class VerticalFlipAnimation extends FlipAnimation {
 
-        private VerticalMoveAnimation(@Direction int direction, boolean enter, long duration) {
+        public VerticalFlipAnimation(@Direction int direction, boolean enter, long duration) {
             super(direction, enter, duration);
+        }
+
+        @Override
+        public void initialize(int width, int height, int parentWidth, int parentHeight) {
+            super.initialize(width, height, parentWidth, parentHeight);
+            mPivotX = width * 0.5f;
+            mPivotY = (mEnter == (mDirection == UP)) ? 0.0f : height;
+            mCameraZ = -height * 0.015f;
         }
 
         @Override
         protected void applyTransformation(float interpolatedTime, Transformation t) {
             float value = mEnter ? (interpolatedTime - 1.0f) : interpolatedTime;
             if (mDirection == DOWN) value *= -1.0f;
+            mRotationX = value * 180.0f;
             mTranslationY = -value * mHeight;
 
             super.applyTransformation(interpolatedTime, t);
+
+            // Hide entering/exiting view before/after half point.
+            if (mEnter) {
+                mAlpha = interpolatedTime <= 0.5f ? 0.0f : 1.0f;
+            } else {
+                mAlpha = interpolatedTime <= 0.5f ? 1.0f : 0.0f;
+            }
+
             applyTransformation(t);
         }
 
     }
 
-    private static class HorizontalMoveAnimation extends MoveAnimation {
+    private static class HorizontalFlipAnimation extends FlipAnimation {
 
-        private HorizontalMoveAnimation(@Direction int direction, boolean enter, long duration) {
+        public HorizontalFlipAnimation(@Direction int direction, boolean enter, long duration) {
             super(direction, enter, duration);
+        }
+
+        @Override
+        public void initialize(int width, int height, int parentWidth, int parentHeight) {
+            super.initialize(width, height, parentWidth, parentHeight);
+            mPivotX = (mEnter == (mDirection == LEFT)) ? 0.0f : width;
+            mPivotY = height * 0.5f;
+            mCameraZ = -width * 0.015f;
         }
 
         @Override
         protected void applyTransformation(float interpolatedTime, Transformation t) {
             float value = mEnter ? (interpolatedTime - 1.0f) : interpolatedTime;
             if (mDirection == RIGHT) value *= -1.0f;
+            mRotationY = -value * 180.0f;
             mTranslationX = -value * mWidth;
 
             super.applyTransformation(interpolatedTime, t);
+
+            // Hide entering/exiting view before/after half point.
+            if (mEnter) {
+                mAlpha = interpolatedTime <= 0.5f ? 0.0f : 1.0f;
+            } else {
+                mAlpha = interpolatedTime <= 0.5f ? 1.0f : 0.0f;
+            }
+
             applyTransformation(t);
         }
 
