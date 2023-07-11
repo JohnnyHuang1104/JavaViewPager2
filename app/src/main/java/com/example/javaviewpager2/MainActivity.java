@@ -4,8 +4,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
@@ -17,11 +21,15 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private ViewPager2 viewPager2;
     private TabLayout tabLayout;
+    private LinearLayout viewpager;
+    private View include;
 
     /** MainActivity 初始化之後，可以依照選單的項目進行特效轉換。
      * onCreate 為初始化效果，接下來的特效變化由 Menu 中被選中的 Item 來決定。
@@ -34,12 +42,19 @@ public class MainActivity extends AppCompatActivity {
 
         viewPager2 = findViewById(R.id.viewPager2);
         tabLayout = findViewById(R.id.tab_layout);
+        viewpager = findViewById(R.id.viewpager);
+        include = findViewById(R.id.include);
 
         // 將清單放入ListAdapter，並將ListAdapter綁定到viewPager2上。
         MyListAdapter adapter = new MyListAdapter(getPersonList());
         viewPager2.setAdapter(adapter);
         setViewPagerTransformerEnlargeWhenScroll(0f, 40);
+        include.setVisibility(View.GONE);
         Log.d(TAG, "onCreate");
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.layout_main, MainFragment.newInstance(MainFragment.NODIR));
+        ft.commit();
+
     }
 
     // 將menu.xml的Layout與Item匯入activity_main.xml
@@ -53,12 +68,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+        MainFragment f = (MainFragment)getSupportFragmentManager().findFragmentById(R.id.layout_main);
         // 根據不同id產生不同的動效
         // 以下的Log用來查驗拿到的Id是否正確
         switch (id) {
             // 基本的頁面切換，不能預覽(Clip = true)，也沒有放大效果(zoom = 0)。
             case R.id.regular:
                 Log.d(TAG, "regular");
+                viewpager.setVisibility(View.VISIBLE);
+                include.setVisibility(View.GONE);
+                tabLayout.setVisibility(View.INVISIBLE);
                 setViewPagerScroll(true); // 參數為Clip，true表示要裁減被Padding到的頁面。
                 setViewPagerTransformerEnlargeWhenScroll(0, 40);
                 return true;
@@ -66,6 +85,9 @@ public class MainActivity extends AppCompatActivity {
             // 基本的一屏三頁特效，能預覽(Clip = false)，沒有放大效果(zoom = 0)。
             case R.id.one_screen_three_page_basic:
                 Log.d(TAG, "one_screen_three_page_basic");
+                viewpager.setVisibility(View.VISIBLE);
+                include.setVisibility(View.GONE);
+                tabLayout.setVisibility(View.INVISIBLE);
                 setViewPagerScroll(false);
                 setViewPagerTransformerEnlargeWhenScroll(0, 40);
                 return true;
@@ -73,6 +95,9 @@ public class MainActivity extends AppCompatActivity {
             // 進階的一屏三頁特效，能預覽(Clip = false)，有放大效果(zoom = 0.35f)。
             case R.id.one_screen_three_page_advanced:
                 Log.d(TAG, "one_screen_three_page_advanced");
+                viewpager.setVisibility(View.VISIBLE);
+                include.setVisibility(View.GONE);
+                tabLayout.setVisibility(View.INVISIBLE);
                 setViewPagerScroll(false);
                 setViewPagerTransformerEnlargeWhenScroll(0.35f, 40);
                 return true;
@@ -81,14 +106,70 @@ public class MainActivity extends AppCompatActivity {
             case R.id.page_indicator:
                 Log.d(TAG, "page_indicator");
                 linkPageIndicatorAndViewPager2();
+                tabLayout.setVisibility(View.VISIBLE);
                 return true;
 
             case R.id.style_move:
                 Log.d(TAG, "style_move");
+                viewpager.setVisibility(View.GONE);
+                include.setVisibility(View.VISIBLE);
+                f.setAnimationStyle(MainFragment.MOVE);
                 return true;
 
             case R.id.style_cube:
                 Log.d(TAG, "style_cube");
+                viewpager.setVisibility(View.GONE);
+                include.setVisibility(View.VISIBLE);
+                f.setAnimationStyle(MainFragment.CUBE);
+                return true;
+
+            case R.id.style_flip:
+                Log.d(TAG, "style_flip");
+                viewpager.setVisibility(View.GONE);
+                include.setVisibility(View.VISIBLE);
+                f.setAnimationStyle(MainFragment.FLIP);
+                return true;
+
+            case R.id.style_pushpull:
+                Log.d(TAG, "style_pushpull");
+                viewpager.setVisibility(View.GONE);
+                include.setVisibility(View.VISIBLE);
+                f.setAnimationStyle(MainFragment.PUSHPULL);
+                return true;
+
+            case R.id.style_sides:
+                Log.d(TAG, "style_sides");
+                viewpager.setVisibility(View.GONE);
+                include.setVisibility(View.VISIBLE);
+                f.setAnimationStyle(MainFragment.SIDES);
+                return true;
+
+            case R.id.style_cubemove:
+                Log.d(TAG, "style_cubemove");
+                viewpager.setVisibility(View.GONE);
+                include.setVisibility(View.VISIBLE);
+                f.setAnimationStyle(MainFragment.CUBEMOVE);
+                return true;
+
+            case R.id.style_movecube:
+                Log.d(TAG, "style_movecube");
+                viewpager.setVisibility(View.GONE);
+                include.setVisibility(View.VISIBLE);
+                f.setAnimationStyle(MainFragment.MOVECUBE);
+                return true;
+
+            case R.id.style_pushmove:
+                f.setAnimationStyle(MainFragment.PUSHMOVE);
+                Log.d(TAG, "style_pushmove");
+                viewpager.setVisibility(View.GONE);
+                include.setVisibility(View.VISIBLE);
+                return true;
+
+            case R.id.style_movepull:
+                f.setAnimationStyle(MainFragment.MOVEPULL);
+                Log.d(TAG, "style_movepull");
+                viewpager.setVisibility(View.GONE);
+                include.setVisibility(View.VISIBLE);
                 return true;
         }
         return super.onOptionsItemSelected(item);

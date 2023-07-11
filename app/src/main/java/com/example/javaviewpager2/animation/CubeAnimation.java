@@ -4,16 +4,10 @@ import android.view.animation.Transformation;
 
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
-
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-/**
- * Move Animation
- * @author kakajika
- * @since 2015/11/28
- */
-public class MoveAnimation extends ViewPropertyAnimation {
+public class CubeAnimation extends ViewPropertyAnimation {
 
     @IntDef({UP, DOWN, LEFT, RIGHT})
     @Retention(RetentionPolicy.SOURCE)
@@ -34,34 +28,43 @@ public class MoveAnimation extends ViewPropertyAnimation {
      * @return
      */
     public static @NonNull
-    MoveAnimation create(@Direction int direction, boolean enter, long duration) {
+    CubeAnimation create(@Direction int direction, boolean enter, long duration) {
         switch (direction) {
             case UP:
             case DOWN:
-                return new VerticalMoveAnimation(direction, enter, duration);
+                return new VerticalCubeAnimation(direction, enter, duration);
             case LEFT:
             case RIGHT:
             default:
-                return new HorizontalMoveAnimation(direction, enter, duration);
+                return new HorizontalCubeAnimation(direction, enter, duration);
         }
     }
 
-    private MoveAnimation(@Direction int direction, boolean enter, long duration) {
+    private CubeAnimation(@Direction int direction, boolean enter, long duration) {
         mDirection = direction;
         mEnter = enter;
         setDuration(duration);
     }
 
-    private static class VerticalMoveAnimation extends MoveAnimation {
+    private static class VerticalCubeAnimation extends CubeAnimation {
 
-        private VerticalMoveAnimation(@Direction int direction, boolean enter, long duration) {
+        private VerticalCubeAnimation(@Direction int direction, boolean enter, long duration) {
             super(direction, enter, duration);
+        }
+
+        @Override
+        public void initialize(int width, int height, int parentWidth, int parentHeight) {
+            super.initialize(width, height, parentWidth, parentHeight);
+            mPivotX = width * 0.5f;
+            mPivotY = (mEnter == (mDirection == UP)) ? 0.0f : height;
+            mCameraZ = -height * 0.015f;
         }
 
         @Override
         protected void applyTransformation(float interpolatedTime, Transformation t) {
             float value = mEnter ? (interpolatedTime - 1.0f) : interpolatedTime;
             if (mDirection == DOWN) value *= -1.0f;
+            mRotationX = value * 90.0f;
             mTranslationY = -value * mHeight;
 
             super.applyTransformation(interpolatedTime, t);
@@ -70,16 +73,25 @@ public class MoveAnimation extends ViewPropertyAnimation {
 
     }
 
-    private static class HorizontalMoveAnimation extends MoveAnimation {
+    private static class HorizontalCubeAnimation extends CubeAnimation {
 
-        private HorizontalMoveAnimation(@Direction int direction, boolean enter, long duration) {
+        private HorizontalCubeAnimation(@Direction int direction, boolean enter, long duration) {
             super(direction, enter, duration);
+        }
+
+        @Override
+        public void initialize(int width, int height, int parentWidth, int parentHeight) {
+            super.initialize(width, height, parentWidth, parentHeight);
+            mPivotX = (mEnter == (mDirection == LEFT)) ? 0.0f : width;
+            mPivotY = height * 0.5f;
+            mCameraZ = -width * 0.015f;
         }
 
         @Override
         protected void applyTransformation(float interpolatedTime, Transformation t) {
             float value = mEnter ? (interpolatedTime - 1.0f) : interpolatedTime;
             if (mDirection == RIGHT) value *= -1.0f;
+            mRotationY = -value * 90.0f;
             mTranslationX = -value * mWidth;
 
             super.applyTransformation(interpolatedTime, t);
@@ -87,5 +99,6 @@ public class MoveAnimation extends ViewPropertyAnimation {
         }
 
     }
-
 }
+
+
