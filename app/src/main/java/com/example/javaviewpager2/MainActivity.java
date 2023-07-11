@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,6 +25,9 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager2 viewPager2;
     private TabLayout tabLayout;
 
+    private LinearLayout viewpager;
+    private View include;
+
     /** MainActivity 初始化之後，可以依照選單的項目進行特效轉換。
      * onCreate 為初始化效果，接下來的特效變化由 Menu 中被選中的 Item 來決定。
      * onCreateOptionsMenu(匯入自定義清單) onOptionsItemSelected(根據被選中的Item進行操作) **/
@@ -34,11 +39,14 @@ public class MainActivity extends AppCompatActivity {
 
         viewPager2 = findViewById(R.id.viewPager2);
         tabLayout = findViewById(R.id.tab_layout);
+        viewpager = findViewById(R.id.viewpager);
+        include = findViewById(R.id.include);
 
         // 將清單放入ListAdapter，並將ListAdapter綁定到viewPager2上。
         MyListAdapter adapter = new MyListAdapter(getPersonList());
         viewPager2.setAdapter(adapter);
         setViewPagerTransformerEnlargeWhenScroll(0f, 40);
+        include.setVisibility(View.GONE);
         Log.d(TAG, "onCreate");
     }
 
@@ -59,6 +67,9 @@ public class MainActivity extends AppCompatActivity {
             // 基本的頁面切換，不能預覽(Clip = true)，也沒有放大效果(zoom = 0)。
             case R.id.regular:
                 Log.d(TAG, "regular");
+                viewpager.setVisibility(View.VISIBLE);
+                include.setVisibility(View.GONE);
+                tabLayout.setVisibility(View.INVISIBLE);
                 setViewPagerScroll(true); // 參數為Clip，true表示要裁減被Padding到的頁面。
                 setViewPagerTransformerEnlargeWhenScroll(0, 40);
                 return true;
@@ -66,6 +77,9 @@ public class MainActivity extends AppCompatActivity {
             // 基本的一屏三頁特效，能預覽(Clip = false)，沒有放大效果(zoom = 0)。
             case R.id.one_screen_three_page_basic:
                 Log.d(TAG, "one_screen_three_page_basic");
+                viewpager.setVisibility(View.VISIBLE);
+                include.setVisibility(View.GONE);
+                tabLayout.setVisibility(View.INVISIBLE);
                 setViewPagerScroll(false);
                 setViewPagerTransformerEnlargeWhenScroll(0, 40);
                 return true;
@@ -73,6 +87,9 @@ public class MainActivity extends AppCompatActivity {
             // 進階的一屏三頁特效，能預覽(Clip = false)，有放大效果(zoom = 0.35f)。
             case R.id.one_screen_three_page_advanced:
                 Log.d(TAG, "one_screen_three_page_advanced");
+                viewpager.setVisibility(View.VISIBLE);
+                include.setVisibility(View.GONE);
+                tabLayout.setVisibility(View.INVISIBLE);
                 setViewPagerScroll(false);
                 setViewPagerTransformerEnlargeWhenScroll(0.35f, 40);
                 return true;
@@ -81,10 +98,13 @@ public class MainActivity extends AppCompatActivity {
             case R.id.page_indicator:
                 Log.d(TAG, "page_indicator");
                 linkPageIndicatorAndViewPager2();
+                tabLayout.setVisibility(View.VISIBLE);
                 return true;
 
             case R.id.style_move:
                 Log.d(TAG, "style_move");
+                viewpager.setVisibility(View.GONE);
+                include.setVisibility(View.VISIBLE);
                 return true;
 
             case R.id.style_cube:
@@ -159,11 +179,11 @@ public class MainActivity extends AppCompatActivity {
         // TabLayoutMediator會對應viewPager2的頁面數量，產生對應的tab(選項卡)。
         // 每個被產生的tab在TabLayout裡會以水平方式排列，並根據在activity_main.xml的設定在背景放置對應顏色的圓點。
         // 綜合上述兩個註解，可看出這個函式就是產生PageIndicator的原因。
-        new TabLayoutMediator(tabLayout, viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
-            @Override
-            public void onConfigureTab(TabLayout.Tab tab, int position) {
+            new TabLayoutMediator(tabLayout, viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
+                @Override
+                public void onConfigureTab(TabLayout.Tab tab, int position) {
 
-            }
-        }).attach();
+                }
+            }).attach();
     }
 }
