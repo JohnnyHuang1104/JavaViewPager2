@@ -15,13 +15,11 @@ import java.lang.annotation.RetentionPolicy;
  */
 public class MoveAnimation extends ViewPropertyAnimation {
 
-    @IntDef({UP, DOWN, LEFT, RIGHT})
+    @IntDef({LEFT, RIGHT})
     @Retention(RetentionPolicy.SOURCE)
     @interface Direction {}
-    public static final int UP    = 1;
-    public static final int DOWN  = 2;
-    public static final int LEFT  = 3;
-    public static final int RIGHT = 4;
+    public static final int LEFT  = 1;
+    public static final int RIGHT = 2;
 
     protected final @Direction int mDirection;
     protected final boolean mEnter;
@@ -36,9 +34,6 @@ public class MoveAnimation extends ViewPropertyAnimation {
     public static @NonNull
     MoveAnimation create(@Direction int direction, boolean enter, long duration) {
         switch (direction) {
-            case UP:
-            case DOWN:
-                return new VerticalMoveAnimation(direction, enter, duration);
             case LEFT:
             case RIGHT:
             default:
@@ -50,24 +45,6 @@ public class MoveAnimation extends ViewPropertyAnimation {
         mDirection = direction;
         mEnter = enter;
         setDuration(duration);
-    }
-
-    private static class VerticalMoveAnimation extends MoveAnimation {
-
-        private VerticalMoveAnimation(@Direction int direction, boolean enter, long duration) {
-            super(direction, enter, duration);
-        }
-
-        @Override
-        protected void applyTransformation(float interpolatedTime, Transformation t) {
-            float value = mEnter ? (interpolatedTime - 1.0f) : interpolatedTime;
-            if (mDirection == DOWN) value *= -1.0f;
-            mTranslationY = -value * mHeight;
-
-            super.applyTransformation(interpolatedTime, t);
-            applyTransformation(t);
-        }
-
     }
 
     private static class HorizontalMoveAnimation extends MoveAnimation {
@@ -89,3 +66,5 @@ public class MoveAnimation extends ViewPropertyAnimation {
     }
 
 }
+
+
