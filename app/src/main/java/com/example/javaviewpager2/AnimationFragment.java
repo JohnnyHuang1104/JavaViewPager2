@@ -28,10 +28,10 @@ import butterknife.OnClick;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link MainFragment#newInstance} factory method to
+ * Use the {@link AnimationFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MainFragment extends Fragment {
+public class AnimationFragment extends Fragment {
 
     @IntDef({NONE, MOVE, CUBE, FLIP, PUSHPULL, SIDES, CUBEMOVE, MOVECUBE, PUSHMOVE, MOVEPULL, FLIPMOVE, MOVEFLIP, FLIPCUBE, CUBEFLIP})
     public @interface AnimationStyle {}
@@ -66,8 +66,8 @@ public class MainFragment extends Fragment {
     TextView mTextAnimationStyle;
 
 
-    public static MainFragment newInstance(@AnimationDirection int direction) {
-        MainFragment show = new MainFragment();
+    public static AnimationFragment newInstance(@AnimationDirection int direction) {
+        AnimationFragment show = new AnimationFragment();
         show.setArguments(new Bundle());
         assert show.getArguments() != null; // 使用assert(斷言)確保資料不為空。
         show.getArguments().putInt("direction", direction); // 使用putInt()方法將direction整數值存儲在Bundle中。
@@ -78,7 +78,7 @@ public class MainFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_animation, container, false);
         int color = Color.rgb((int) Math.floor(Math.random() * 128) + 64,
                 (int) Math.floor(Math.random() * 128) + 64,
                 (int) Math.floor(Math.random() * 128) + 64);
@@ -232,7 +232,7 @@ public class MainFragment extends Fragment {
         getArguments().putInt("direction", LEFT);
         FragmentManager fragmentManager = this.getParentFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
-        ft.replace(R.id.layout_main, MainFragment.newInstance(LEFT));
+        ft.replace(R.id.layout_content_animation, AnimationFragment.newInstance(LEFT));
         ft.commit();
     }
 
@@ -244,7 +244,7 @@ public class MainFragment extends Fragment {
         getArguments().putInt("direction", RIGHT);
         FragmentManager fragmentManager = this.getParentFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
-        ft.replace(R.id.layout_main, MainFragment.newInstance(RIGHT));
+        ft.replace(R.id.layout_content_animation, AnimationFragment.newInstance(RIGHT));
         ft.commit();
     }
 
