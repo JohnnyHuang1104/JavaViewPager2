@@ -27,8 +27,8 @@ public class MainActivity extends AppCompatActivity {
 
     private ViewPager2 viewPager2;
     private TabLayout tabLayout;
-    private LinearLayout viewpager;
-    private View include;
+    private LinearLayout viewpagerContainer;
+    private View contentMain;
 
     /** MainActivity 初始化之後，可以依照選單的項目進行特效轉換。
      * onCreate 為初始化效果，接下來的特效變化由 Menu 中被選中的 Item 來決定。
@@ -41,9 +41,21 @@ public class MainActivity extends AppCompatActivity {
 
         viewPager2 = findViewById(R.id.viewPager2);
         tabLayout = findViewById(R.id.tab_layout);
-        viewpager = findViewById(R.id.viewpager);
-        include = findViewById(R.id.include); // 將content_main.xml匯入Main_Activity
+        viewpagerContainer = findViewById(R.id.viewpagerContainer);
+        contentMain = findViewById(R.id.contentMain); // 將content_main.xml匯入Main_Activity
 
+        initViewPagerRegular(); // 初始化viewpager
+
+        // 因為初始化時顯示的視窗為ViewPager2，在此將fragment的視窗設為不可見。
+        contentMain.setVisibility(View.INVISIBLE);
+        
+        // 在content_main.xml被綁定到主頁後，對其佈局中的FrameLayout(@id/layout_main)進行fragment的置換。
+        fragmentShowAnimation();
+      
+        Log.d(TAG, "onCreate");
+    }
+
+    private void initViewPagerRegular() {
         // 將清單放入ListAdapter，並將ListAdapter綁定到viewPager2上。
         MyListAdapter adapter = new MyListAdapter(getPersonList());
         viewPager2.setAdapter(adapter);
@@ -51,14 +63,6 @@ public class MainActivity extends AppCompatActivity {
         // 初始化時，只能看到ViewPager2的當前頁面且沒有放大效果。
         setViewPagerScroll(true);
         setViewPagerTransformerEnlargeWhenScroll(0f, 40);
-
-        // 因為初始化時顯示的視窗為ViewPager2，在此將fragment的視窗設為不可見。
-        include.setVisibility(View.INVISIBLE);
-        
-        // 在content_main.xml被綁定到主頁後，對其佈局中的FrameLayout(@id/layout_main)進行fragment的置換。
-        fragmentShowAnimation();
-      
-        Log.d(TAG, "onCreate");
     }
 
     // 將menu.xml的Layout與Item匯入activity_main.xml
@@ -232,20 +236,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showViewPager2() {
-        viewpager.setVisibility(View.VISIBLE); // 使viewpager可見。
-        include.setVisibility(View.INVISIBLE); // 因為在content_main.xml裡面有加一個Frame，而這個Frame會和layout有所重疊，故這裡要使Frame不可見。
+        viewpagerContainer.setVisibility(View.VISIBLE); // 使viewpager可見。
+        contentMain.setVisibility(View.INVISIBLE); // 因為在content_main.xml裡面有加一個Frame，而這個Frame會和layout有所重疊，故這裡要使Frame不可見。
         tabLayout.setVisibility(View.INVISIBLE); // 使tabLayout(page indicator)不可見。
     }
 
     private void showPageIndicator() {
-        viewpager.setVisibility(View.VISIBLE);
-        include.setVisibility(View.GONE);
+        viewpagerContainer.setVisibility(View.VISIBLE);
+        contentMain.setVisibility(View.GONE);
         tabLayout.setVisibility(View.VISIBLE);
     }
 
     private void showFragment() {
-        viewpager.setVisibility(View.GONE);
-        include.setVisibility(View.VISIBLE);
+        viewpagerContainer.setVisibility(View.GONE);
+        contentMain.setVisibility(View.VISIBLE);
     }
 
     private void linkPageIndicatorAndViewPager2() {
