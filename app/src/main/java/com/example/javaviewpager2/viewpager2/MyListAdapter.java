@@ -40,7 +40,7 @@ public class MyListAdapter extends ListAdapter<MyPerson, MyListAdapter.MyViewHol
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.page, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_pokemon, parent, false);
         return new MyViewHolder(view);
     }
 
