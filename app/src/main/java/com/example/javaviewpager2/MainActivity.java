@@ -14,6 +14,8 @@ import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.javaviewpager2.viewpager2.MyListAdapter;
+import com.example.javaviewpager2.viewpager2.MyPerson;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -40,18 +42,24 @@ public class MainActivity extends AppCompatActivity {
         viewPager2 = findViewById(R.id.viewPager2);
         tabLayout = findViewById(R.id.tab_layout);
         viewpager = findViewById(R.id.viewpager);
-        include = findViewById(R.id.include);
+        include = findViewById(R.id.include); // 將content_main.xml匯入Main_Activity
 
         // 將清單放入ListAdapter，並將ListAdapter綁定到viewPager2上。
         MyListAdapter adapter = new MyListAdapter(getPersonList());
         viewPager2.setAdapter(adapter);
+
+        // 初始化時，只能看到ViewPager2的當前頁面且沒有放大效果。
+        setViewPagerScroll(true);
         setViewPagerTransformerEnlargeWhenScroll(0f, 40);
-        include.setVisibility(View.GONE);
-        Log.d(TAG, "onCreate");
+
+        // 因為初始化時顯示的視窗為ViewPager2，在此將fragment的視窗設為不可見。
+        include.setVisibility(View.INVISIBLE);
+        
+        // 在content_main.xml被綁定到主頁後，對其佈局中的FrameLayout(@id/layout_main)進行fragment的置換。
         fragmentShowAnimation();
+      
+        Log.d(TAG, "onCreate");
     }
-
-
 
     // 將menu.xml的Layout與Item匯入activity_main.xml
     @Override
@@ -71,9 +79,7 @@ public class MainActivity extends AppCompatActivity {
             // 基本的頁面切換，不能預覽(Clip = true)，也沒有放大效果(zoom = 0)。
             case R.id.regular:
                 Log.d(TAG, "regular");
-                viewpager.setVisibility(View.VISIBLE); // 使viewpager可見。
-                include.setVisibility(View.GONE); // 因為在content_main.xml裡面有加一個Frame，而這個Frame會和layout有所重疊，故這裡要使Frame不可見。
-                tabLayout.setVisibility(View.INVISIBLE); // 使tabLayout(page indicator)不可見。
+                showViewPager2();
                 setViewPagerScroll(true); // 參數為Clip，true表示要裁減被Padding到的頁面。
                 setViewPagerTransformerEnlargeWhenScroll(0, 40);
                 return true;
@@ -81,9 +87,7 @@ public class MainActivity extends AppCompatActivity {
             // 基本的一屏三頁特效，能預覽(Clip = false)，沒有放大效果(zoom = 0)。
             case R.id.one_screen_three_page_basic:
                 Log.d(TAG, "one_screen_three_page_basic");
-                viewpager.setVisibility(View.VISIBLE);
-                include.setVisibility(View.GONE);
-                tabLayout.setVisibility(View.INVISIBLE);
+                showViewPager2();
                 setViewPagerScroll(false);
                 setViewPagerTransformerEnlargeWhenScroll(0, 40);
                 return true;
@@ -91,9 +95,8 @@ public class MainActivity extends AppCompatActivity {
             // 進階的一屏三頁特效，能預覽(Clip = false)，有放大效果(zoom = 0.35f)。
             case R.id.one_screen_three_page_advanced:
                 Log.d(TAG, "one_screen_three_page_advanced");
-                viewpager.setVisibility(View.VISIBLE);
-                include.setVisibility(View.GONE);
-                tabLayout.setVisibility(View.INVISIBLE);
+                // showPageIndicator()會顯示ViewPager2，不顯示PageIndicator與Fragment。
+                showViewPager2();
                 setViewPagerScroll(false);
                 setViewPagerTransformerEnlargeWhenScroll(0.35f, 40);
                 return true;
@@ -102,77 +105,70 @@ public class MainActivity extends AppCompatActivity {
             case R.id.page_indicator:
                 Log.d(TAG, "page_indicator");
                 linkPageIndicatorAndViewPager2();
-                viewpager.setVisibility(View.VISIBLE);
-                include.setVisibility(View.GONE);
-                tabLayout.setVisibility(View.VISIBLE);
+                // showPageIndicator()會顯示ViewPager2與PageIndicator，不顯示Fragment。
+                showPageIndicator();
                 return true;
 
-                // 呈現move的模式。
+            // 以下的case為Fragment的特效，showFragment()只顯示Fragment，不顯示ViewPager2與PageIndicator。
+            // show.setAnimationStyle()會將不同的轉場特效放入Fragment中。
             case R.id.style_move:
                 Log.d(TAG, "style_move");
-                viewpager.setVisibility(View.GONE);
-                include.setVisibility(View.VISIBLE);
+                showFragment();
                 show.setAnimationStyle(MainFragment.MOVE);
                 return true;
 
             case R.id.style_cube:
                 Log.d(TAG, "style_cube");
-                viewpager.setVisibility(View.GONE);
-                include.setVisibility(View.VISIBLE);
+                showFragment();
                 show.setAnimationStyle(MainFragment.CUBE);
                 return true;
 
             case R.id.style_flip:
                 Log.d(TAG, "style_flip");
-                viewpager.setVisibility(View.GONE);
-                include.setVisibility(View.VISIBLE);
+                showFragment();
                 show.setAnimationStyle(MainFragment.FLIP);
                 return true;
 
             case R.id.style_pushpull:
                 Log.d(TAG, "style_pushpull");
-                viewpager.setVisibility(View.GONE);
-                include.setVisibility(View.VISIBLE);
+                showFragment();
                 show.setAnimationStyle(MainFragment.PUSHPULL);
                 return true;
 
             case R.id.style_sides:
                 Log.d(TAG, "style_sides");
-                viewpager.setVisibility(View.GONE);
-                include.setVisibility(View.VISIBLE);
+                showFragment();
                 show.setAnimationStyle(MainFragment.SIDES);
                 return true;
 
             case R.id.style_cubemove:
                 Log.d(TAG, "style_cubemove");
-                viewpager.setVisibility(View.GONE);
-                include.setVisibility(View.VISIBLE);
+                showFragment();
                 show.setAnimationStyle(MainFragment.CUBEMOVE);
                 return true;
 
             case R.id.style_movecube:
                 Log.d(TAG, "style_movecube");
-                viewpager.setVisibility(View.GONE);
-                include.setVisibility(View.VISIBLE);
+                showFragment();
                 show.setAnimationStyle(MainFragment.MOVECUBE);
                 return true;
 
             case R.id.style_pushmove:
                 Log.d(TAG, "style_pushmove");
-                viewpager.setVisibility(View.GONE);
-                include.setVisibility(View.VISIBLE);
+                showFragment();
                 show.setAnimationStyle(MainFragment.PUSHMOVE);
                 return true;
 
             case R.id.style_movepull:
                 Log.d(TAG, "style_movepull");
-                viewpager.setVisibility(View.GONE);
-                include.setVisibility(View.VISIBLE);
+                showFragment();
                 show.setAnimationStyle(MainFragment.MOVEPULL);
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 
     private List<MyPerson> getPersonList() {
         // create list
@@ -233,6 +229,23 @@ public class MainActivity extends AppCompatActivity {
             page.setScaleY(scaleFactor);
         });
         viewPager2.setPageTransformer(compositePageTransformer);
+    }
+
+    private void showViewPager2() {
+        viewpager.setVisibility(View.VISIBLE); // 使viewpager可見。
+        include.setVisibility(View.INVISIBLE); // 因為在content_main.xml裡面有加一個Frame，而這個Frame會和layout有所重疊，故這裡要使Frame不可見。
+        tabLayout.setVisibility(View.INVISIBLE); // 使tabLayout(page indicator)不可見。
+    }
+
+    private void showPageIndicator() {
+        viewpager.setVisibility(View.VISIBLE);
+        include.setVisibility(View.GONE);
+        tabLayout.setVisibility(View.VISIBLE);
+    }
+
+    private void showFragment() {
+        viewpager.setVisibility(View.GONE);
+        include.setVisibility(View.VISIBLE);
     }
 
     private void linkPageIndicatorAndViewPager2() {

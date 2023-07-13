@@ -76,7 +76,9 @@ public class MainFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.page, container, false);
+
+        View view = inflater.inflate(R.layout.fragment, container, false);
+     
         ButterKnife.bind(this, view); // 使左右方向鍵可以運作。
 
         mTextAnimationStyle = view.findViewById(R.id.textAnimationStyle);

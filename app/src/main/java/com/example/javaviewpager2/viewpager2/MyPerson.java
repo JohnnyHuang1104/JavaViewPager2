@@ -1,4 +1,4 @@
-package com.example.javaviewpager2;
+package com.example.javaviewpager2.viewpager2;
 
 import java.util.ArrayList;
 import java.util.List;
