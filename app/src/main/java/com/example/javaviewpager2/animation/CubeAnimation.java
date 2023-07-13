@@ -65,7 +65,6 @@ public class CubeAnimation extends ViewPropertyAnimation {
             super.applyTransformation(interpolatedTime, t);
             applyTransformation(t);
         }
-
     }
 }
 

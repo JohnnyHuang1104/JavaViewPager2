@@ -48,11 +48,10 @@ public class MainActivity extends AppCompatActivity {
         setViewPagerTransformerEnlargeWhenScroll(0f, 40);
         include.setVisibility(View.GONE);
         Log.d(TAG, "onCreate");
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction(); // FragmentTransaction進行Fragment之間的交換，beginTransaction開始進行切換的動作。
-        ft.replace(R.id.layout_main, MainFragment.newInstance(MainFragment.NODIR));
-        ft.commit(); // 執行上述所敘述的步驟。
-
+        fragmentShowAnimation();
     }
+
+
 
     // 將menu.xml的Layout與Item匯入activity_main.xml
     @Override
@@ -246,5 +245,11 @@ public class MainActivity extends AppCompatActivity {
 
             }
         }).attach();
+    }
+
+    private void fragmentShowAnimation(){
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction(); // FragmentTransaction進行Fragment之間的交換，beginTransaction開始進行切換的動作。
+        ft.replace(R.id.layout_main, MainFragment.newInstance(MainFragment.NODIR));
+        ft.commit(); // 執行上述所敘述的步驟。
     }
 }
