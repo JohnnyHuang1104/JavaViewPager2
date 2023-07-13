@@ -77,7 +77,7 @@ public class MainFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.page, container, false);
+        View view = inflater.inflate(R.layout.fragment, container, false);
         // int color = Color.rgb((int) Math.floor(Math.random() * 128) + 64,
         //        (int) Math.floor(Math.random() * 128) + 64,
         //        (int) Math.floor(Math.random() * 128) + 64);

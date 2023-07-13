@@ -1,4 +1,4 @@
-package com.example.javaviewpager2;
+package com.example.javaviewpager2.viewpager2;
 
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
@@ -12,7 +12,8 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
+import com.example.javaviewpager2.R;
+
 import java.util.List;
 
 public class MyListAdapter extends ListAdapter<MyPerson, MyListAdapter.MyViewHolder> {
