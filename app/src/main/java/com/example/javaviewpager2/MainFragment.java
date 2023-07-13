@@ -1,6 +1,7 @@
 package com.example.javaviewpager2;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -78,7 +79,10 @@ public class MainFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment, container, false);
-     
+        int color = Color.rgb((int) Math.floor(Math.random() * 128) + 64,
+                (int) Math.floor(Math.random() * 128) + 64,
+                (int) Math.floor(Math.random() * 128) + 64);
+        view.setBackgroundColor(color);
         ButterKnife.bind(this, view); // 使左右方向鍵可以運作。
 
         mTextAnimationStyle = view.findViewById(R.id.textAnimationStyle);

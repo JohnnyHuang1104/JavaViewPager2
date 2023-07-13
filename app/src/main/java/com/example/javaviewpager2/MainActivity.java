@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        MainFragment show = (MainFragment)getSupportFragmentManager().findFragmentById(R.id.layout_main);
+        MainFragment layoutMain = (MainFragment)getSupportFragmentManager().findFragmentById(R.id.layout_main);
         // 根據不同id產生不同的動效
         // 以下的Log用來查驗拿到的Id是否正確
         switch (id) {
@@ -114,55 +114,55 @@ public class MainActivity extends AppCompatActivity {
             case R.id.style_move:
                 Log.d(TAG, "style_move");
                 showFragment();
-                show.setAnimationStyle(MainFragment.MOVE);
+                layoutMain.setAnimationStyle(MainFragment.MOVE);
                 return true;
 
             case R.id.style_cube:
                 Log.d(TAG, "style_cube");
                 showFragment();
-                show.setAnimationStyle(MainFragment.CUBE);
+                layoutMain.setAnimationStyle(MainFragment.CUBE);
                 return true;
 
             case R.id.style_flip:
                 Log.d(TAG, "style_flip");
                 showFragment();
-                show.setAnimationStyle(MainFragment.FLIP);
+                layoutMain.setAnimationStyle(MainFragment.FLIP);
                 return true;
 
             case R.id.style_pushpull:
                 Log.d(TAG, "style_pushpull");
                 showFragment();
-                show.setAnimationStyle(MainFragment.PUSHPULL);
+                layoutMain.setAnimationStyle(MainFragment.PUSHPULL);
                 return true;
 
             case R.id.style_sides:
                 Log.d(TAG, "style_sides");
                 showFragment();
-                show.setAnimationStyle(MainFragment.SIDES);
+                layoutMain.setAnimationStyle(MainFragment.SIDES);
                 return true;
 
             case R.id.style_cubemove:
                 Log.d(TAG, "style_cubemove");
                 showFragment();
-                show.setAnimationStyle(MainFragment.CUBEMOVE);
+                layoutMain.setAnimationStyle(MainFragment.CUBEMOVE);
                 return true;
 
             case R.id.style_movecube:
                 Log.d(TAG, "style_movecube");
                 showFragment();
-                show.setAnimationStyle(MainFragment.MOVECUBE);
+                layoutMain.setAnimationStyle(MainFragment.MOVECUBE);
                 return true;
 
             case R.id.style_pushmove:
                 Log.d(TAG, "style_pushmove");
                 showFragment();
-                show.setAnimationStyle(MainFragment.PUSHMOVE);
+                layoutMain.setAnimationStyle(MainFragment.PUSHMOVE);
                 return true;
 
             case R.id.style_movepull:
                 Log.d(TAG, "style_movepull");
                 showFragment();
-                show.setAnimationStyle(MainFragment.MOVEPULL);
+                layoutMain.setAnimationStyle(MainFragment.MOVEPULL);
                 return true;
         }
         return super.onOptionsItemSelected(item);
