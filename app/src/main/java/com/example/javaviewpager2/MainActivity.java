@@ -97,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
             // 進階的一屏三頁特效，能預覽(Clip = false)，有放大效果(zoom = 0.35f)。
             case R.id.one_screen_three_page_advanced:
                 Log.d(TAG, "one_screen_three_page_advanced");
+                // showPageIndicator()會顯示ViewPager2，不顯示PageIndicator與Fragment。
                 showViewPager2();
                 setViewPagerScroll(false);
                 setViewPagerTransformerEnlargeWhenScroll(0.35f, 40);
@@ -106,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.page_indicator:
                 Log.d(TAG, "page_indicator");
                 linkPageIndicatorAndViewPager2();
+                // showPageIndicator()會顯示ViewPager2與PageIndicator，不顯示Fragment。
                 showPageIndicator();
                 return true;
 
