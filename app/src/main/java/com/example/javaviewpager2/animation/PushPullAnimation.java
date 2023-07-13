@@ -15,13 +15,11 @@ import java.lang.annotation.RetentionPolicy;
  */
 public class PushPullAnimation extends ViewPropertyAnimation {
 
-    @IntDef({UP, DOWN, LEFT, RIGHT})
+    @IntDef({LEFT, RIGHT})
     @Retention(RetentionPolicy.SOURCE)
     @interface Direction {}
-    public static final int UP    = 1;
-    public static final int DOWN  = 2;
-    public static final int LEFT  = 3;
-    public static final int RIGHT = 4;
+    public static final int LEFT  = 1;
+    public static final int RIGHT = 2;
 
     protected final @Direction int mDirection;
     protected final boolean mEnter;
@@ -36,9 +34,6 @@ public class PushPullAnimation extends ViewPropertyAnimation {
     public static @NonNull
     PushPullAnimation create(@Direction int direction, boolean enter, long duration) {
         switch (direction) {
-            case UP:
-            case DOWN:
-                return new VerticalPushPullAnimation(direction, enter, duration);
             case LEFT:
             case RIGHT:
             default:
@@ -50,32 +45,6 @@ public class PushPullAnimation extends ViewPropertyAnimation {
         mDirection = direction;
         mEnter = enter;
         setDuration(duration);
-    }
-
-    private static class VerticalPushPullAnimation extends PushPullAnimation {
-
-        private VerticalPushPullAnimation(@Direction int direction, boolean enter, long duration) {
-            super(direction, enter, duration);
-        }
-
-        @Override
-        public void initialize(int width, int height, int parentWidth, int parentHeight) {
-            super.initialize(width, height, parentWidth, parentHeight);
-            mPivotX = width * 0.5f;
-            mPivotY = (mEnter == (mDirection == DOWN)) ? 0.0f : height;
-        }
-
-        @Override
-        protected void applyTransformation(float interpolatedTime, Transformation t) {
-            float value = mEnter ? (interpolatedTime - 1.0f) : interpolatedTime;
-            if (mDirection == UP) value *= -1.0f;
-            mRotationX = value * 90.0f;
-            mAlpha = mEnter ? interpolatedTime : (1.0f - interpolatedTime);
-
-            super.applyTransformation(interpolatedTime, t);
-            applyTransformation(t);
-        }
-
     }
 
     private static class HorizontalPushPullAnimation extends PushPullAnimation {

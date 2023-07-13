@@ -22,7 +22,6 @@ import com.example.javaviewpager2.animation.PushPullAnimation;
 import com.example.javaviewpager2.animation.SidesAnimation;
 import com.google.android.material.snackbar.Snackbar;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -51,13 +50,12 @@ public class MainFragment extends Fragment {
     public static final int FLIPCUBE = 12;
     public static final int CUBEFLIP = 13;
 
-    @IntDef({NODIR, UP, DOWN, LEFT, RIGHT})
+
+    @IntDef({NODIR, LEFT, RIGHT})
     public @interface AnimationDirection {}
     public static final int NODIR = 0;
-    public static final int UP    = 1;
-    public static final int DOWN  = 2;
-    public static final int LEFT  = 3;
-    public static final int RIGHT = 4;
+    public static final int LEFT  = 1;
+    public static final int RIGHT = 2;
 
     private static final long DURATION = 500;
 
@@ -69,22 +67,22 @@ public class MainFragment extends Fragment {
 
 
     public static MainFragment newInstance(@AnimationDirection int direction) {
-        MainFragment f = new MainFragment();
-        f.setArguments(new Bundle());
-        assert f.getArguments() != null;
-        f.getArguments().putInt("direction", direction);
-        return f;
+        MainFragment show = new MainFragment();
+        show.setArguments(new Bundle());
+        assert show.getArguments() != null; // 使用assert(斷言)確保資料不為空。
+        show.getArguments().putInt("direction", direction); // 使用putInt()方法將direction整數值存儲在Bundle中。
+        return show;
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.page, container, false); // layout名稱改過
-        int color = Color.rgb((int) Math.floor(Math.random() * 128) + 64,
-                (int) Math.floor(Math.random() * 128) + 64,
-                (int) Math.floor(Math.random() * 128) + 64);
-        view.setBackgroundColor(color);
-        ButterKnife.bind(this, view);
+        View view = inflater.inflate(R.layout.page, container, false);
+        // int color = Color.rgb((int) Math.floor(Math.random() * 128) + 64,
+        //        (int) Math.floor(Math.random() * 128) + 64,
+        //        (int) Math.floor(Math.random() * 128) + 64);
+        //view.setBackgroundColor(color);
+        ButterKnife.bind(this, view); // 使左右方向鍵可以運作。
 
         mTextAnimationStyle = view.findViewById(R.id.textAnimationStyle);
         setAnimationStyleText();
@@ -96,13 +94,11 @@ public class MainFragment extends Fragment {
     @Nullable
     public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
         assert getArguments() != null;
+
+        // 以下宣告各自的方法類別
         switch (sAnimationStyle) {
             case MOVE:
                 switch (getArguments().getInt("direction")) {
-                    case UP:
-                        return MoveAnimation.create(MoveAnimation.UP, enter, DURATION);
-                    case DOWN:
-                        return MoveAnimation.create(MoveAnimation.DOWN, enter, DURATION);
                     case LEFT:
                         return MoveAnimation.create(MoveAnimation.LEFT, enter, DURATION);
                     case RIGHT:
@@ -111,10 +107,6 @@ public class MainFragment extends Fragment {
                 break;
             case CUBE:
                 switch (getArguments().getInt("direction")) {
-                    case UP:
-                        return CubeAnimation.create(CubeAnimation.UP, enter, DURATION);
-                    case DOWN:
-                        return CubeAnimation.create(CubeAnimation.DOWN, enter, DURATION);
                     case LEFT:
                         return CubeAnimation.create(CubeAnimation.LEFT, enter, DURATION);
                     case RIGHT:
@@ -123,10 +115,6 @@ public class MainFragment extends Fragment {
                 break;
             case FLIP:
                 switch (getArguments().getInt("direction")) {
-                    case UP:
-                        return FlipAnimation.create(FlipAnimation.UP, enter, DURATION);
-                    case DOWN:
-                        return FlipAnimation.create(FlipAnimation.DOWN, enter, DURATION);
                     case LEFT:
                         return FlipAnimation.create(FlipAnimation.LEFT, enter, DURATION);
                     case RIGHT:
@@ -135,10 +123,6 @@ public class MainFragment extends Fragment {
                 break;
             case PUSHPULL:
                 switch (getArguments().getInt("direction")) {
-                    case UP:
-                        return PushPullAnimation.create(PushPullAnimation.UP, enter, DURATION);
-                    case DOWN:
-                        return PushPullAnimation.create(PushPullAnimation.DOWN, enter, DURATION);
                     case LEFT:
                         return PushPullAnimation.create(PushPullAnimation.LEFT, enter, DURATION);
                     case RIGHT:
@@ -147,10 +131,6 @@ public class MainFragment extends Fragment {
                 break;
             case SIDES:
                 switch (getArguments().getInt("direction")) {
-                    case UP:
-                        return SidesAnimation.create(SidesAnimation.UP, enter, DURATION);
-                    case DOWN:
-                        return SidesAnimation.create(SidesAnimation.DOWN, enter, DURATION);
                     case LEFT:
                         return SidesAnimation.create(SidesAnimation.LEFT, enter, DURATION);
                     case RIGHT:
@@ -159,12 +139,6 @@ public class MainFragment extends Fragment {
                 break;
             case CUBEMOVE:
                 switch (getArguments().getInt("direction")) {
-                    case UP:
-                        return enter ? MoveAnimation.create(MoveAnimation.UP, enter, DURATION).fading(0.3f, 1.0f) :
-                                CubeAnimation.create(CubeAnimation.UP, enter, DURATION).fading(1.0f, 0.3f);
-                    case DOWN:
-                        return enter ? MoveAnimation.create(MoveAnimation.DOWN, enter, DURATION).fading(0.3f, 1.0f) :
-                                CubeAnimation.create(CubeAnimation.DOWN, enter, DURATION).fading(1.0f, 0.3f);
                     case LEFT:
                         return enter ? MoveAnimation.create(MoveAnimation.LEFT, enter, DURATION).fading(0.3f, 1.0f) :
                                 CubeAnimation.create(CubeAnimation.LEFT, enter, DURATION).fading(1.0f, 0.3f);
@@ -175,15 +149,9 @@ public class MainFragment extends Fragment {
                 break;
             case MOVECUBE:
                 switch (getArguments().getInt("direction")) {
-                    case UP:
-                        return enter ? CubeAnimation.create(CubeAnimation.UP, enter, DURATION).fading(0.3f, 1.0f) :
-                                MoveAnimation.create(MoveAnimation.UP, enter, DURATION).fading(1.0f, 0.3f);
-                    case DOWN:
-                        return enter ? CubeAnimation.create(CubeAnimation.DOWN, enter, DURATION).fading(0.3f, 1.0f) :
-                                MoveAnimation.create(MoveAnimation.DOWN, enter, DURATION).fading(1.0f, 0.3f);
                     case LEFT:
                         return enter ? CubeAnimation.create(CubeAnimation.LEFT, enter, DURATION).fading(0.3f, 1.0f) :
-                                MoveAnimation.create(MoveAnimation.LEFT, enter, DURATION).fading(1.0f, 0.3f);
+                               MoveAnimation.create(MoveAnimation.LEFT, enter, DURATION).fading(1.0f, 0.3f);
                     case RIGHT:
                         return enter ? CubeAnimation.create(CubeAnimation.RIGHT, enter, DURATION).fading(0.3f, 1.0f) :
                                 MoveAnimation.create(MoveAnimation.RIGHT, enter, DURATION).fading(1.0f, 0.3f);
@@ -191,12 +159,6 @@ public class MainFragment extends Fragment {
                 break;
             case PUSHMOVE:
                 switch (getArguments().getInt("direction")) {
-                    case UP:
-                        return enter ? MoveAnimation.create(MoveAnimation.UP, enter, DURATION) :
-                                PushPullAnimation.create(PushPullAnimation.UP, enter, DURATION);
-                    case DOWN:
-                        return enter ? MoveAnimation.create(MoveAnimation.DOWN, enter, DURATION) :
-                                PushPullAnimation.create(PushPullAnimation.DOWN, enter, DURATION);
                     case LEFT:
                         return enter ? MoveAnimation.create(MoveAnimation.LEFT, enter, DURATION) :
                                 PushPullAnimation.create(PushPullAnimation.LEFT, enter, DURATION);
@@ -207,12 +169,6 @@ public class MainFragment extends Fragment {
                 break;
             case MOVEPULL:
                 switch (getArguments().getInt("direction")) {
-                    case UP:
-                        return enter ? PushPullAnimation.create(PushPullAnimation.UP, enter, DURATION) :
-                                MoveAnimation.create(MoveAnimation.UP, enter, DURATION).fading(1.0f, 0.3f);
-                    case DOWN:
-                        return enter ? PushPullAnimation.create(PushPullAnimation.DOWN, enter, DURATION) :
-                                MoveAnimation.create(MoveAnimation.DOWN, enter, DURATION).fading(1.0f, 0.3f);
                     case LEFT:
                         return enter ? PushPullAnimation.create(PushPullAnimation.LEFT, enter, DURATION) :
                                 MoveAnimation.create(MoveAnimation.LEFT, enter, DURATION).fading(1.0f, 0.3f);
@@ -223,12 +179,6 @@ public class MainFragment extends Fragment {
                 break;
             case FLIPMOVE:
                 switch (getArguments().getInt("direction")) {
-                    case UP:
-                        return enter ? MoveAnimation.create(MoveAnimation.UP, enter, DURATION) :
-                                FlipAnimation.create(FlipAnimation.UP, enter, DURATION);
-                    case DOWN:
-                        return enter ? MoveAnimation.create(MoveAnimation.DOWN, enter, DURATION) :
-                                FlipAnimation.create(FlipAnimation.DOWN, enter, DURATION);
                     case LEFT:
                         return enter ? MoveAnimation.create(MoveAnimation.LEFT, enter, DURATION) :
                                 FlipAnimation.create(FlipAnimation.LEFT, enter, DURATION);
@@ -239,12 +189,6 @@ public class MainFragment extends Fragment {
                 break;
             case MOVEFLIP:
                 switch (getArguments().getInt("direction")) {
-                    case UP:
-                        return enter ? FlipAnimation.create(FlipAnimation.UP, enter, DURATION) :
-                                MoveAnimation.create(MoveAnimation.UP, enter, DURATION).fading(1.0f, 0.3f);
-                    case DOWN:
-                        return enter ? FlipAnimation.create(FlipAnimation.DOWN, enter, DURATION) :
-                                MoveAnimation.create(MoveAnimation.DOWN, enter, DURATION).fading(1.0f, 0.3f);
                     case LEFT:
                         return enter ? FlipAnimation.create(FlipAnimation.LEFT, enter, DURATION) :
                                 MoveAnimation.create(MoveAnimation.LEFT, enter, DURATION).fading(1.0f, 0.3f);
@@ -255,12 +199,6 @@ public class MainFragment extends Fragment {
                 break;
             case FLIPCUBE:
                 switch (getArguments().getInt("direction")) {
-                    case UP:
-                        return enter ? CubeAnimation.create(CubeAnimation.UP, enter, DURATION) :
-                                FlipAnimation.create(FlipAnimation.UP, enter, DURATION);
-                    case DOWN:
-                        return enter ? CubeAnimation.create(CubeAnimation.DOWN, enter, DURATION) :
-                                FlipAnimation.create(FlipAnimation.DOWN, enter, DURATION);
                     case LEFT:
                         return enter ? CubeAnimation.create(CubeAnimation.LEFT, enter, DURATION) :
                                 FlipAnimation.create(FlipAnimation.LEFT, enter, DURATION);
@@ -271,12 +209,6 @@ public class MainFragment extends Fragment {
                 break;
             case CUBEFLIP:
                 switch (getArguments().getInt("direction")) {
-                    case UP:
-                        return enter ? FlipAnimation.create(FlipAnimation.UP, enter, DURATION) :
-                                CubeAnimation.create(CubeAnimation.UP, enter, DURATION).fading(1.0f, 0.3f);
-                    case DOWN:
-                        return enter ? FlipAnimation.create(FlipAnimation.DOWN, enter, DURATION) :
-                                CubeAnimation.create(CubeAnimation.DOWN, enter, DURATION).fading(1.0f, 0.3f);
                     case LEFT:
                         return enter ? FlipAnimation.create(FlipAnimation.LEFT, enter, DURATION) :
                                 CubeAnimation.create(CubeAnimation.LEFT, enter, DURATION).fading(1.0f, 0.3f);
@@ -290,32 +222,6 @@ public class MainFragment extends Fragment {
         }
         return null;
     }
-
-
-    //@SuppressLint("NonConstantResourceId")
-    //@SuppressWarnings("unused")
-    //@OnClick(R.id.buttonUp)
-    //void onButtonUp() {
-    //    assert getArguments() != null;
-    //    getArguments().putInt("direction", UP);
-    //    FragmentManager fragmentManager = this.getParentFragmentManager();
-    //    FragmentTransaction ft = fragmentManager.beginTransaction();
-    //    ft.replace(R.id.layout_main, MainFragment.newInstance(UP));
-    //    ft.commit();
-    //}
-
-    //@SuppressLint("NonConstantResourceId")
-    //@SuppressWarnings("unused")
-    //@OnClick(R.id.buttonDown)
-    //void onButtonDown() {
-    //    assert getArguments() != null;
-    //    getArguments().putInt("direction", DOWN);
-    //    FragmentManager fragmentManager = this.getParentFragmentManager();
-    //    FragmentTransaction ft = fragmentManager.beginTransaction();
-        //FragmentTransaction ft =  getFragmentManager().beginTransaction();
-    //    ft.replace(R.id.layout_main, MainFragment.newInstance(DOWN));
-    //    ft.commit();
-    //}
 
     @SuppressLint("NonConstantResourceId")
     @SuppressWarnings("unused")
@@ -362,10 +268,9 @@ public class MainFragment extends Fragment {
         if (sAnimationStyle != style) {
             sAnimationStyle = style;
             setAnimationStyleText();
-            Snackbar.make(getView(), "Animation Style is Changed", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(getView(), "Animation Style is Changed", Snackbar.LENGTH_SHORT).show(); // 若style數字有所變化的話，則出現text裡面的字。
         }
     }
-
 
     @SuppressLint("SetTextI18n")
     private void setAnimationStyleText() {
@@ -415,6 +320,3 @@ public class MainFragment extends Fragment {
         }
     }
 }
-
-
-
