@@ -54,13 +54,11 @@ public class MainActivity extends AppCompatActivity {
 
         // 因為初始化時顯示的視窗為ViewPager2，在此將fragment的視窗設為不可見。
         include.setVisibility(View.INVISIBLE);
-
+        
         // 在content_main.xml被綁定到主頁後，對其佈局中的FrameLayout(@id/layout_main)進行fragment的置換。
-        // FragmentTransaction進行Fragment之間的交換，beginTransaction開始進行切換的動作。
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.layout_main, MainFragment.newInstance(MainFragment.NODIR));
-        ft.commit(); // 執行上述所敘述的步驟。
-
+        fragmentShowAnimation();
+      
+        Log.d(TAG, "onCreate");
     }
 
     // 將menu.xml的Layout與Item匯入activity_main.xml
@@ -260,5 +258,11 @@ public class MainActivity extends AppCompatActivity {
 
             }
         }).attach();
+    }
+
+    private void fragmentShowAnimation(){
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction(); // FragmentTransaction進行Fragment之間的交換，beginTransaction開始進行切換的動作。
+        ft.replace(R.id.layout_main, MainFragment.newInstance(MainFragment.NODIR));
+        ft.commit(); // 執行上述所敘述的步驟。
     }
 }

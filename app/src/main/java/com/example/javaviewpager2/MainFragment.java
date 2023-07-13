@@ -1,7 +1,6 @@
 package com.example.javaviewpager2;
 
 import android.annotation.SuppressLint;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -77,11 +76,9 @@ public class MainFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment, container, false);
-        // int color = Color.rgb((int) Math.floor(Math.random() * 128) + 64,
-        //        (int) Math.floor(Math.random() * 128) + 64,
-        //        (int) Math.floor(Math.random() * 128) + 64);
-        //view.setBackgroundColor(color);
+     
         ButterKnife.bind(this, view); // 使左右方向鍵可以運作。
 
         mTextAnimationStyle = view.findViewById(R.id.textAnimationStyle);
@@ -231,7 +228,6 @@ public class MainFragment extends Fragment {
         getArguments().putInt("direction", LEFT);
         FragmentManager fragmentManager = this.getParentFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
-        //FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.replace(R.id.layout_main, MainFragment.newInstance(LEFT));
         ft.commit();
     }
@@ -244,7 +240,6 @@ public class MainFragment extends Fragment {
         getArguments().putInt("direction", RIGHT);
         FragmentManager fragmentManager = this.getParentFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
-        //FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.replace(R.id.layout_main, MainFragment.newInstance(RIGHT));
         ft.commit();
     }

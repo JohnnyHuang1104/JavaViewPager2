@@ -8,10 +8,6 @@ import android.view.animation.Transformation;
 
 import androidx.annotation.FloatRange;
 
-/**
- * @author kakajika
- * @since 2015/11/27
- */
 public class ViewPropertyAnimation extends Animation {
 
     private final Camera mCamera = new Camera();
