@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         viewPager2 = findViewById(R.id.viewPager2);
-        tabLayout = findViewById(R.id.tab_layout);
+        tabLayout = findViewById(R.id.tabLayout);
         viewpagerContainer = findViewById(R.id.viewpagerContainer);
         contentMain = findViewById(R.id.contentMain); // 將content_main.xml匯入Main_Activity
 

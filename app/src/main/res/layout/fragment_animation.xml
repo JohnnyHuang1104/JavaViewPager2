@@ -92,11 +92,9 @@
                 android:textSize="25dp"
                 android:textStyle="bold" />
 
-
         </LinearLayout>
 
         <RelativeLayout
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -115,11 +113,9 @@
                 android:layout_height="50dp"
                 android:layout_alignParentRight="true"
                 android:background="@drawable/right"
-                android:padding="8dp"
-                />
+                android:padding="8dp" />
 
         </RelativeLayout>
-
 
         <ImageView
             android:id="@+id/image_view"
