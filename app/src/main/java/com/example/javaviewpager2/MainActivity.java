@@ -48,10 +48,10 @@ public class MainActivity extends AppCompatActivity {
 
         // 因為初始化時顯示的視窗為ViewPager2，在此將fragment的視窗設為不可見。
         contentMain.setVisibility(View.INVISIBLE);
-        
+
         // 在content_main.xml被綁定到主頁後，對其佈局中的FrameLayout(@id/layout_main)進行fragment的置換。
-        fragmentShowAnimation();
-      
+        initAnimationFragment();
+
         Log.d(TAG, "onCreate");
     }
 
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        MainFragment show = (MainFragment)getSupportFragmentManager().findFragmentById(R.id.layout_main);
+        AnimationFragment layoutContentAnimation = (AnimationFragment)getSupportFragmentManager().findFragmentById(R.id.layout_content_animation);
         // 根據不同id產生不同的動效
         // 以下的Log用來查驗拿到的Id是否正確
         switch (id) {
@@ -118,55 +118,55 @@ public class MainActivity extends AppCompatActivity {
             case R.id.style_move:
                 Log.d(TAG, "style_move");
                 showFragment();
-                show.setAnimationStyle(MainFragment.MOVE);
+                layoutContentAnimation.setAnimationStyle(AnimationFragment.MOVE);
                 return true;
 
             case R.id.style_cube:
                 Log.d(TAG, "style_cube");
                 showFragment();
-                show.setAnimationStyle(MainFragment.CUBE);
+                layoutContentAnimation.setAnimationStyle(AnimationFragment.CUBE);
                 return true;
 
             case R.id.style_flip:
                 Log.d(TAG, "style_flip");
                 showFragment();
-                show.setAnimationStyle(MainFragment.FLIP);
+                layoutContentAnimation.setAnimationStyle(AnimationFragment.FLIP);
                 return true;
 
             case R.id.style_pushpull:
                 Log.d(TAG, "style_pushpull");
                 showFragment();
-                show.setAnimationStyle(MainFragment.PUSHPULL);
+                layoutContentAnimation.setAnimationStyle(AnimationFragment.PUSHPULL);
                 return true;
 
             case R.id.style_sides:
                 Log.d(TAG, "style_sides");
                 showFragment();
-                show.setAnimationStyle(MainFragment.SIDES);
+                layoutContentAnimation.setAnimationStyle(AnimationFragment.SIDES);
                 return true;
 
             case R.id.style_cubemove:
                 Log.d(TAG, "style_cubemove");
                 showFragment();
-                show.setAnimationStyle(MainFragment.CUBEMOVE);
+                layoutContentAnimation.setAnimationStyle(AnimationFragment.CUBEMOVE);
                 return true;
 
             case R.id.style_movecube:
                 Log.d(TAG, "style_movecube");
                 showFragment();
-                show.setAnimationStyle(MainFragment.MOVECUBE);
+                layoutContentAnimation.setAnimationStyle(AnimationFragment.MOVECUBE);
                 return true;
 
             case R.id.style_pushmove:
                 Log.d(TAG, "style_pushmove");
                 showFragment();
-                show.setAnimationStyle(MainFragment.PUSHMOVE);
+                layoutContentAnimation.setAnimationStyle(AnimationFragment.PUSHMOVE);
                 return true;
 
             case R.id.style_movepull:
                 Log.d(TAG, "style_movepull");
                 showFragment();
-                show.setAnimationStyle(MainFragment.MOVEPULL);
+                layoutContentAnimation.setAnimationStyle(AnimationFragment.MOVEPULL);
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -264,9 +264,9 @@ public class MainActivity extends AppCompatActivity {
         }).attach();
     }
 
-    private void fragmentShowAnimation(){
+    private void initAnimationFragment(){
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction(); // FragmentTransaction進行Fragment之間的交換，beginTransaction開始進行切換的動作。
-        ft.replace(R.id.layout_main, MainFragment.newInstance(MainFragment.NODIR));
+        ft.replace(R.id.layout_content_animation, AnimationFragment.newInstance(AnimationFragment.NODIR));
         ft.commit(); // 執行上述所敘述的步驟。
     }
 }
