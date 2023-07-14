@@ -10,7 +10,6 @@
         android:id="@+id/contentMain"
         layout="@layout/content_animation"/>
 
-
     <LinearLayout
         android:id="@+id/viewpagerContainer"
         android:layout_width="match_parent"
@@ -25,9 +24,10 @@
             android:layout_weight="9"
             android:paddingHorizontal="35dp"
             android:layout_marginTop="15dp" />
+
         <!--tab_selector用來將Indicator對應到目前的Page-->
         <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_layout"
+            android:id="@+id/tabLayout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
