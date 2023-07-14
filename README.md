@@ -5,3 +5,4 @@
 <br>&emsp;(3)One screen three pages(advance) - Base on the second point , has zoom in effect when page swiping. 
 <br>&emsp;(4)PageIndicator -  show the position which page be selected, and can be turned off.
 <br>&emsp;(5)Move and the rest animation - can hide Viewpager2 and tablayout, then show different animation in one fragment. 
+<br>
