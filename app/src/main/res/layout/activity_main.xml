@@ -7,11 +7,12 @@
     android:layout_height="match_parent">
 
     <include
-        android:id="@+id/include"
+        android:id="@+id/contentMain"
         layout="@layout/content_animation"/>
 
+
     <LinearLayout
-        android:id="@+id/viewpager"
+        android:id="@+id/viewpagerContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MainActivity"
